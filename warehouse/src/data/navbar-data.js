@@ -2,20 +2,15 @@ export const links = [
   {
     id: 1,
     link: "/products",
-    text: "Produkty",
-  },
-  {
-    id: 2,
-    link: "/products",
     text: "Katalog",
   },
   {
-    id: 3,
+    id: 2,
     link: "/orders",
     text: "Zamówienia",
   },
   {
-    id: 4,
+    id: 3,
     link: "/workers",
     text: "Pracownicy",
   },

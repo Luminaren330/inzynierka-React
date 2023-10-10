@@ -18,10 +18,8 @@ const Dashboard = () => {
               przesyłka otrzymasz w ciągu kilku dni roboczych. Płatność przy
               odbiorze. Zapraszamy!
             </p>
-            <Link to="/products">
-              <button className={styles.redirect}>
-                Przejdź do towarów <FaArrowRight />
-              </button>
+            <Link to="/products" className={styles.redirect}>
+              Przejdź do towarów <FaArrowRight />
             </Link>
           </div>
         </div>

@@ -1,0 +1,71 @@
+
+
+.header {
+  margin-top: 30px;
+  color: rgb(241, 7, 7);
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.tableList {
+  table-layout:fixed;
+  border: 1px solid rgb(241, 7, 7);
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.categoryFilter {
+  margin-top: 20px;
+  color: rgb(241, 7, 7);
+}
+
+select {
+  margin-left: 20px;
+  width: 100px;
+  font-size: 15px;
+  background-color: #f2f2f2;
+}
+.head {
+  background-color: rgb(241, 7, 7);
+  color: white;
+  font-size: 20px;
+  border: 1px solid black;  
+}
+
+.row>.tdList {
+  padding: 0.4rem;
+}
+
+.row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.tdList {
+  font-size: 15px;
+  border: 1px solid black;
+}
+
+.cartAmount {
+  width: 100px;
+}
+
+.cartAdd {
+  color: white;
+  background-color: rgb(241, 7, 7);
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid rgb(241, 7, 7);
+  transition: all 0.3s ease-in;
+&:hover { 
+  cursor: pointer;
+  color: rgb(241, 7, 7);
+  background-color: #fff;
+}
+}

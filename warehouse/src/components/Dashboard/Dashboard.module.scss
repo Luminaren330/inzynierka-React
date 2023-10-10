@@ -12,7 +12,7 @@ html {
 
 .body {
     width: 100vw;
-    height: 90vh;
+    height: 100%;
 }
 
 .bimage {
@@ -55,18 +55,18 @@ html {
     padding: 10px;
     transition: all 0.3s ease-in-out;
     box-shadow: 20px 10px 10px rgb(54, 53, 53);
+    text-decoration: none !important;
 
-}
-
-.redirect:hover {
+&:hover {
     cursor: pointer;
     color: rgb(133, 2, 2);
     background-color: white;
     border: 1px solid rgb(133, 2, 2);
     
 }
+}
 .contact {
-    height: 10vh;
+    height: 12.7vh;
     background: black  no-repeat center center/ cover;
     background-attachment: fixed;
     color: white;
