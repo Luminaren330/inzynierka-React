@@ -16,9 +16,9 @@ const Products = () => {
     //console.log("Product");
     getProducts();
     getCart();
-  }, [cart]);
+  }, [cart, productList]);
 
-  const getProducts = () => {
+  const getProducts = useCallback(() => {
     Axios.get("http://localhost:3001/products").then((response) => {
       setProductList(response.data);
       const uniqueCategories = [
@@ -26,7 +26,7 @@ const Products = () => {
       ];
       setCategoryList(uniqueCategories);
     });
-  };
+  });
 
   const handleFilterChange = (event) => {
     setFilterCategory(event.target.value);
