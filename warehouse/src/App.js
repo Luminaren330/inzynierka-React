@@ -1,6 +1,7 @@
 import "./App.scss";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Products from "./components/Products/Products";
+import MakeOrder from "./components/MakeOrder/MakeOrder";
 
 import {
   BrowserRouter as Router,
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/makeorder" element={<MakeOrder />} />
         </Routes>
       </Router>
     </>

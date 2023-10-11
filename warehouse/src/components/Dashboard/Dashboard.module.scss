@@ -84,7 +84,7 @@ html {
     margin-top: 10px;
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (max-height: 900px)  {
     .center {
         margin-left: 30px;
     }
@@ -93,7 +93,7 @@ html {
     }
     .info {
         font-size: 20px;
-        width: 300px;
+        width: 600px;
 
     }
     .redirect {
@@ -103,12 +103,13 @@ html {
         margin-top: 30px;
     }
 }
-@media screen and (max-width: 1430px) {
+@media screen and (max-width: 1450px) and (max-height: 920px) {
     .center {
         margin-left: 30px;
     }
     .info {
-        width: 600px;
+        width: 400px;
+        font-size: 20px;
     }
     // .redirect {
     //     height: 60px;

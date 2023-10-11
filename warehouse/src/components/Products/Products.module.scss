@@ -1,4 +1,4 @@
-
+@import '../../App.scss';
 
 .header {
   margin-top: 30px;
@@ -61,11 +61,70 @@ select {
   background-color: rgb(241, 7, 7);
   border-radius: 20px;
   padding: 10px;
-  border: 1px solid rgb(241, 7, 7);
+  border: 1px solid rgb(148, 2, 2);
   transition: all 0.3s ease-in;
+
 &:hover { 
   cursor: pointer;
   color: rgb(241, 7, 7);
   background-color: #fff;
 }
+}
+
+.cartList {
+  table-layout:fixed;
+  border-collapse: collapse;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.cartDelete {
+  width: 100px;
+  background-color: rgb(241, 7, 7);
+  color: white;
+  border-radius: 20px;
+  border: none;
+  padding: 7px;
+  transition: all 0.3s ease-in;
+}
+
+.makeOrder { 
+  background-color: rgb(241, 7, 7);
+  padding: 20px;
+  text-decoration: none;
+  border-radius: 40px;
+  color: white;
+  position: relative;
+  left: 70%;
+  transition: all 0.3s ease-in;
+  
+}
+
+.cartDelete:hover,.makeOrder:hover {
+  color: rgb(241, 7, 7);
+  border: 1px solid rgb(241, 7, 7);
+  cursor: pointer;
+  background-color: white;
+} 
+
+@media screen  and (max-width: 1100px) {
+  .cartDelete {
+    width: 50px;
+    font-size: 15px;
+  }
+
+  .tdList {
+    font-size: 12px;
+  }
+  .cartList {
+    width: 60%;
+  }
+  .cartAmount { 
+    width: 50px;
+    font-size: 12px;
+  }
+  .head {
+    font-size: 15px;
+  }
+  
 }

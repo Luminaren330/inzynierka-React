@@ -26,6 +26,19 @@ app.get("/products", (req, res) => {
   );
 });
 
+app.get("/products/cart", (req, res) => {
+  db.query(
+    "SELECT ITEMS.OBJECT_OBJECTSID, ITEMS.CargoId, OBJECT.Name as ObjectName, ITEMS.Amount, ITEMS.Price FROM ITEMS INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID WHERE ITEMS.Status =0",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 app.post("/products/cartadd", async (req, res) => {
   const id = req.body.ObjectSID;
   const amount = req.body.Amount;
@@ -46,7 +59,7 @@ app.post("/products/cartadd", async (req, res) => {
 
     // Query 1: Get itemCount
     const itemCountResult = await executeQuery(
-      "SELECT COUNT(CARGOID) as itemCount FROM ITEMS"
+      "SELECT MAX(CARGOID) as itemCount FROM ITEMS"
     );
     const itemCount = itemCountResult[0].itemCount + 1;
 
@@ -63,16 +76,70 @@ app.post("/products/cartadd", async (req, res) => {
     );
     const itemsPrice = itemsPriceResult[0].itemsPrice * amount;
 
+    const objectAmountResult = await executeQuery(
+      "SELECT AMOUNT as objectAmount FROM OBJECT WHERE ObjectSID = ?",
+      [id]
+    );
+    const objectAmount = objectAmountResult[0].objectAmount;
+
+    await executeQuery("UPDATE OBJECT SET AMOUNT = ? - ? WHERE OBJECTSID = ?", [
+      objectAmount,
+      amount,
+      id,
+    ]);
+
     // Insert into ITEMS
     await executeQuery(
       "INSERT INTO ITEMS (CargoId, Amount, Object_ObjectSID, Price, OrderId, Status) VALUES(?, ?, ?, ?, ?, ?)",
       [itemCount, amount, id, itemsPrice, orderCount, 0]
     );
-
+    console.log("Added to cart");
     res.send("Added to Cart");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding to Cart");
+  }
+});
+
+app.delete("/products/deletecart/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const executeQuery = (sql, params = []) => {
+      return new Promise((resolve, reject) => {
+        db.query(sql, params, (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    };
+    const objectSidResult = await executeQuery(
+      "SELECT Object_ObjectSID as objectSid FROM ITEMS WHERE CargoId = ?",
+      [id]
+    );
+    const objectSid = objectSidResult[0].objectSid;
+
+    const cartAmountResult = await executeQuery(
+      "SELECT AMOUNT aS cartAmount FROM ITEMS WHERE CargoId = ?",
+      [id]
+    );
+    const cartAmount = cartAmountResult[0].cartAmount;
+
+    await executeQuery(
+      "UPDATE OBJECT SET AMOUNT = AMOUNT + ? WHERE ObjectSID = ?",
+      [cartAmount, objectSid]
+    );
+
+    await executeQuery("DELETE FROM ITEMS WHERE CargoId = ?", [id]);
+
+    console.log("Deleted from cart");
+    res.send("Deleted from cart");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting from cart");
   }
 });
 

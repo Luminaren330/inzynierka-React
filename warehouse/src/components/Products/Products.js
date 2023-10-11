@@ -1,8 +1,10 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import Axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./Products.module.scss";
+import { Link } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Products = () => {
   const [productList, setProductList] = useState([]);
@@ -11,8 +13,10 @@ const Products = () => {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
+    //console.log("Product");
     getProducts();
-  }, []);
+    getCart();
+  }, [cart]);
 
   const getProducts = () => {
     Axios.get("http://localhost:3001/products").then((response) => {
@@ -33,13 +37,34 @@ const Products = () => {
   });
 
   const addToCart = (Id, amount) => {
-    Axios.post("http://localhost:3001/products/cartadd", {
-      ObjectSID: Id,
-      Amount: amount,
-    }).then(() => {
-      setCart([...cart, Id]);
-    });
+    if (!isNaN(amount)) {
+      Axios.post("http://localhost:3001/products/cartadd", {
+        ObjectSID: Id,
+        Amount: amount,
+      }).then(() => {
+        alert("Dodano produkt do koszyka");
+      });
+    } else {
+      alert("Nie można dodać 0 przedmiotów do koszyka");
+    }
   };
+
+  const deleteCart = useCallback(
+    (id) => {
+      Axios.delete(`http://localhost:3001/products/deletecart/${id}`, {}).then(
+        () => {
+          alert("Usunięto z koszyka");
+        }
+      );
+    },
+    [cart]
+  );
+
+  const getCart = useCallback(() => {
+    Axios.get("http://localhost:3001/products/cart").then((response) => {
+      setCart(response.data);
+    });
+  }, [cart]);
 
   return (
     <>
@@ -122,10 +147,55 @@ const Products = () => {
           </table>
         </div>
         <h2 className={styles.header}>Twój koszyk</h2>
-        <div className={styles.center}>
-          <table className={styles.tableList}>
-            <tbody></tbody>
+        <div>
+          <table className={styles.cartList}>
+            {cart.length > 0 && (
+              <thead className={styles.head}>
+                <tr>
+                  <th className={styles.head}>Numer</th>
+                  <th className={styles.head}>Nazwa</th>
+                  <th className={styles.head}>Ilość</th>
+                  <th className={styles.head}>Cena</th>
+                  <th className={styles.head}></th>
+                </tr>
+              </thead>
+            )}
+            <tbody className={styles.cartButton}>
+              {cart.map((product, key) => {
+                return (
+                  <tr key={key} className={styles.row}>
+                    <td className={styles.tdList}>
+                      <p>{product.CargoId}</p>
+                    </td>
+                    <td className={styles.tdList}>
+                      <p>{product.ObjectName}</p>
+                    </td>
+                    <td className={styles.tdList}>
+                      <p>{product.Amount}</p>
+                    </td>
+                    <td className={styles.tdList}>
+                      <p>{product.Price} zł</p>
+                    </td>
+                    <td className={styles.tdList}>
+                      <button
+                        className={styles.cartDelete}
+                        onClick={() => {
+                          deleteCart(product.CargoId);
+                        }}
+                      >
+                        Usuń <FaTrashAlt />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
+          {cart.length > 0 && (
+            <Link to="/makeorder" className={styles.makeOrder}>
+              Złóż zamówienie
+            </Link>
+          )}
         </div>
       </div>
     </>
