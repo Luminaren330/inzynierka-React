@@ -73,6 +73,50 @@ const createOrder = async (req, res) => {
   }
 };
 
+const getOrders = (req, res) => {
+  db.query(
+    "SELECT `ORDER`.OrderId as orderId, CLIENT.NAME as client, CLIENT.ADDRESS as address, CLIENT.Zipcode as zipcode, CLIENT.PhoneNumber as phoneNumber, GROUP_CONCAT(CONCAT(ITEMS.Amount, ' ', OBJECT.NAME) SEPARATOR ', ') as items, WORKER.Name as worker1, WORKER.Surname as worker2 FROM ((((ITEMS INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID) INNER JOIN `Order` ON ITEMS.OrderId = `Order`.OrderId) INNER JOIN CLIENT ON CLIENT.ClientId = `Order`.Client_ClientId) INNER JOIN WORKER ON WORKER.WorkerId = `Order`.Worker_WorkerId) WHERE `ORDER`.OrderStatus = 0 GROUP BY `ORDER`.OrderId",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+};
+
+const deleteOrder = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const executeQuery = (sql, params = []) => {
+      return new Promise((resolve, reject) => {
+        db.query(sql, params, (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    };
+    await executeQuery("DELETE FROM ITEMS WHERE OrderId = ?", [id]);
+
+    await executeQuery("DELETE FROM `ORDER` WHERE OrderId = ?", [id]);
+
+    await executeQuery("DELETE FROM CLIENT WHERE ClientId = ?", [id]);
+
+    console.log("Order ended");
+    res.send("Order ended");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting order");
+  }
+};
+
 module.exports = {
   createOrder,
+  getOrders,
+  deleteOrder,
 };

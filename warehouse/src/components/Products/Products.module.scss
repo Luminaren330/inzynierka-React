@@ -47,8 +47,12 @@ select {
   background-color: #f2f2f2;
 }
 
-.tdList {
+.tdList, .tdListwork {
   font-size: 15px;
+  border-bottom: 1px solid black;
+}
+
+.tdList, .tdListpro {
   border: 1px solid black;
 }
 
@@ -100,12 +104,48 @@ select {
   
 }
 
+.orderp {
+  font-size: 20px;
+  text-align: center;
+}
+
+.orderpro {
+  font-size: 12px;
+}
+
 .cartDelete:hover,.makeOrder:hover {
   color: rgb(241, 7, 7);
   border: 1px solid rgb(241, 7, 7);
   cursor: pointer;
   background-color: white;
 } 
+
+.orderEnd {
+  width: 130px;
+  background-color: rgb(241, 7, 7);
+  color: white;
+  border-radius: 20px;
+  border: none;
+  padding: 7px;
+  transition: all 0.3s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    color: rgb(241, 7, 7);
+    background-color: #fff;
+    border: 1px solid rgb(241, 7, 7);
+  }
+}
+
+@media screen  and (max-width: 1250px) { 
+ .orderEnd { 
+    font-size: 12px;
+    width: 90px;
+  }
+  .orderp {
+    font-size: 15px;
+  }
+}
 
 @media screen  and (max-width: 1100px) {
   .cartDelete {
@@ -126,5 +166,6 @@ select {
   .head {
     font-size: 15px;
   }
-  
+ 
 }
+

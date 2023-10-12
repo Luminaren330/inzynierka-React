@@ -4,7 +4,6 @@ import Axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import styles from "./Products.module.scss";
 import { Link } from "react-router-dom";
-import { FaTrashAlt } from "react-icons/fa";
 import Filter from "./Filter";
 import Catalog from "./Catalog";
 import Cart from "./Cart";
