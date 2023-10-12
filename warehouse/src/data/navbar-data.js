@@ -14,4 +14,9 @@ export const links = [
     link: "/workers",
     text: "Pracownicy",
   },
+  {
+    id: 4,
+    link: "/workers/addworker",
+    text: "Dodaj pracownika",
+  },
 ];
