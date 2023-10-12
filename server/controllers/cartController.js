@@ -1,16 +1,21 @@
 const db = require("../db");
 
 const getCart = (req, res) => {
-  db.query(
-    "SELECT ITEMS.OBJECT_OBJECTSID, ITEMS.CargoId, OBJECT.Name as ObjectName, ITEMS.Amount, ITEMS.Price FROM ITEMS INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID WHERE ITEMS.Status =0",
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+  const select =
+    "SELECT ITEMS.OBJECT_OBJECTSID, ITEMS.CargoId, OBJECT.Name as ObjectName, ITEMS.Amount, ITEMS.Price FROM ITEMS";
+
+  const join =
+    " INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID WHERE ITEMS.Status =0";
+
+  const sql = select + join;
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
     }
-  );
+  });
 };
 
 const addCart = async (req, res) => {

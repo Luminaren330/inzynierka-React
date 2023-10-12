@@ -74,16 +74,42 @@ const createOrder = async (req, res) => {
 };
 
 const getOrders = (req, res) => {
-  db.query(
-    "SELECT `ORDER`.OrderId as orderId, CLIENT.NAME as client, CLIENT.ADDRESS as address, CLIENT.Zipcode as zipcode, CLIENT.PhoneNumber as phoneNumber, GROUP_CONCAT(CONCAT(ITEMS.Amount, ' ', OBJECT.NAME) SEPARATOR ', ') as items, WORKER.Name as worker1, WORKER.Surname as worker2 FROM ((((ITEMS INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID) INNER JOIN `Order` ON ITEMS.OrderId = `Order`.OrderId) INNER JOIN CLIENT ON CLIENT.ClientId = `Order`.Client_ClientId) INNER JOIN WORKER ON WORKER.WorkerId = `Order`.Worker_WorkerId) WHERE `ORDER`.OrderStatus = 0 GROUP BY `ORDER`.OrderId",
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+  const selectClient =
+    "SELECT `ORDER`.OrderId as orderId, CLIENT.NAME as client, CLIENT.ADDRESS as address, CLIENT.Zipcode as zipcode, CLIENT.PhoneNumber as phoneNumber, ";
+  const selectItems =
+    "GROUP_CONCAT(CONCAT(ITEMS.Amount, ' ', OBJECT.NAME) SEPARATOR ', ') as items, ";
+  const selectWorker = "WORKER.Name as worker1, WORKER.Surname as worker2 ";
+
+  const objectJoin =
+    "FROM ((((ITEMS INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID) ";
+
+  const orderJoin = "INNER JOIN `Order` ON ITEMS.OrderId = `Order`.OrderId) ";
+
+  const clientJoin =
+    "INNER JOIN CLIENT ON CLIENT.ClientId = `Order`.Client_ClientId) ";
+
+  const workerJoin =
+    "INNER JOIN WORKER ON WORKER.WorkerId = `Order`.Worker_WorkerId) ";
+
+  const whereClause = "WHERE `ORDER`.OrderStatus = 0 GROUP BY `ORDER`.OrderId";
+
+  const sql =
+    selectClient +
+    selectItems +
+    selectWorker +
+    objectJoin +
+    orderJoin +
+    clientJoin +
+    workerJoin +
+    whereClause;
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
     }
-  );
+  });
 };
 
 const deleteOrder = async (req, res) => {
