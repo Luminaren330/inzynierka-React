@@ -20,7 +20,7 @@ const createOrder = async (req, res) => {
     };
 
     const clientIdResult = await executeQuery(
-      "SELECT COUNT(CLIENTID) as clientId FROM CLIENT"
+      "SELECT MAX(CLIENTID) as clientId FROM CLIENT"
     );
     const clientId = clientIdResult[0].clientId + 1;
     await executeQuery("INSERT INTO CLIENT VALUES (?,?,?,?,?)", [
@@ -43,7 +43,7 @@ const createOrder = async (req, res) => {
     const orderId = orderIdResult[0].orderId;
 
     const orderCountResult = await executeQuery(
-      "SELECT COUNT(ORDERID) as orderCount FROM `ORDER`"
+      "SELECT MAX(ORDERID) as orderCount FROM `ORDER`"
     );
     const orderCount = orderCountResult[0].orderCount + 1;
 

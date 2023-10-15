@@ -1,18 +1,20 @@
-import styles from "./MakeOrder.module.scss";
+import styles from "./AddProduct.module.scss";
 import React from "react";
 
-const StringInput = ({ string, setParameter }) => {
+const IntInput = ({ string, setParameter }) => {
   return (
     <>
       <label htmlFor={string} className={styles.formLabel}>
         {string}
       </label>
       <input
-        type="text"
+        type="number"
+        min = "1"
+        step="0.01"
         className={styles.formInput}
         onChange={(event) => setParameter(event.target.value)}
       ></input>
     </>
   );
 };
-export default StringInput;
+export default IntInput;

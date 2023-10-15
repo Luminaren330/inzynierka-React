@@ -44,7 +44,7 @@ const addCart = async (req, res) => {
 
     // Query 2: Get orderCount
     const orderCountResult = await executeQuery(
-      "SELECT COUNT(ORDERNUMBER) as orderCount FROM `ORDER`"
+      "SELECT MAX(ORDERNUMBER) as orderCount FROM `ORDER`"
     );
     const orderCount = orderCountResult[0].orderCount + 1;
 

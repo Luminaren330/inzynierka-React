@@ -19,4 +19,9 @@ export const links = [
     link: "/workers/addworker",
     text: "Dodaj pracownika",
   },
+  {
+    id: 5,
+    link: "/products/addnewproduct",
+    text: "Dodaj przedmiot"
+  }
 ];

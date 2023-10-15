@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const ordersController = require("../controllers/workersController");
+const workersController = require("../controllers/workersController");
 
-router.get("/workers", ordersController.getWorkers);
+router.get("/workers", workersController.getWorkers);
+router.post("/workers/addworker", workersController.addWorker)
 module.exports = router;

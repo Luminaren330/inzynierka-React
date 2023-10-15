@@ -1,7 +1,5 @@
 @import '../../App.scss';
 
-
-
 .header {
     color: rgb(241, 7, 7);
     font-weight: bold;
@@ -19,39 +17,26 @@
     border-radius: 5px;
     
 }
+
+.center {
+    text-align: center;
+    margin-top: 40px;
+}
 .formLabel {
     color: rgb(241, 7, 7);
     font-size: 20px;
     margin: 10px 0px 0px 40px;
 }
-.formInput {
+
+.dropdown {
     width: 95%;
-    margin: 0px 0px 30px 40px;
+    margin: 0px 40px 30px 40px;
     align-items: center;
-    background-color: rgb(249, 249, 249);
     border: 0.5px solid black;
     border-radius: 5px;
 }
 
-.smallForm {
-    color: rgb(241, 7, 7);
-    font-size: 20px;
-    margin: 10px 0px 10px 0px;
-    position: relative;
-    right: 3%;
-}
-
-.format {
-    display: flex;
-    justify-content: space-between;
-}
-
-.center {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.makeOrder {
+.addWorker {
     background-color: rgb(241, 7, 7);
     color: white;
     border-radius: 30px;
@@ -65,27 +50,14 @@
         color: rgb(241, 7, 7);
         background-color: white;
         border: 1px solid rgb(241, 7, 7);
-    }
-
+    }  
 }
 
 @media screen and (max-width: 1500px) {
 
-     .formInput {
-        width: 90%;
-    }
-     .smallForm {
-        right: 7%;
-     }
-    
-}
+    .dropdown {
+       width: 90%;
+   }
 
-@media screen and (max-width: 1000px) {
-
-    .smallForm {
-       right: 5%;
-    }
    
 }
-
-

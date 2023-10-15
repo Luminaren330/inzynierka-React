@@ -5,7 +5,7 @@ const FormatInput = ({ string, setParameter, format, pattern }) => {
   return (
     <>
       <div className={styles.format}>
-        <label for={string} className={styles.formLabel}>
+        <label htmlFor={string} className={styles.formLabel}>
           {string}
         </label>
         <small className={styles.smallForm}> {format}</small>

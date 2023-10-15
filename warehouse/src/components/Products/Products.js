@@ -28,13 +28,13 @@ const Products = () => {
       ];
       setCategoryList(uniqueCategories);
     });
-  });
+  },[]);
 
   const getCart = useCallback(() => {
     Axios.get("http://localhost:3001/products/cart").then((response) => {
       setCart(response.data);
     });
-  }, [cart]);
+  }, []);
 
   const filteredProductList = productList.filter((product) => {
     return filterCategory === "" || product.Category === filterCategory;
