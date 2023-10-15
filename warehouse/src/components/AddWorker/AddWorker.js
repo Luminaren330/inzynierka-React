@@ -17,12 +17,17 @@ const AddWorker = () => {
     const options = [
       'Sprzedawca', 'Magazynier', 'Menadżer'
     ]
+    const [wrong,setWrong] = useState(false);
 
     const PositionSet = (event) => {
       setPosition(event.target.value);
     }
 
     const addWorker = () => {
+      if(isNaN(phoneNumber) || phoneNumber.length !==9 ) {
+        setWrong(true);
+      }
+      else { 
         Axios.post("http://localhost:3001/workers/addworker", {
             name: name,
             surname: surname,
@@ -31,8 +36,10 @@ const AddWorker = () => {
         }).then(()=> {
             alert("Dodano pracownika");
             navigate("/workers");
+            setWrong(false);
         })
         .catch(() => navigate("/error"));
+      }
     }
     return (
         <>
@@ -52,7 +59,10 @@ const AddWorker = () => {
           value = {position}
           string = "Stanowisko"
           setFunction = {PositionSet}/>
-          
+          {wrong && <div>
+            <h4>Niepoprawny format numeru telefonu</h4>
+            </div>
+            }
             </div>
             <div className={styles.center}>
           <button

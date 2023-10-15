@@ -12,8 +12,13 @@ const MakeOrder = () => {
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState("");
   const navigate = useNavigate();
+  const [wrong,setWrong] = useState(false);
 
   const createOrder = () => {
+    if(isNaN(phoneNumber) || phoneNumber.length !==9 || zipcode.length !== 6 || !zipcode.includes('-')) {
+      setWrong(true);
+    }
+    else { 
     Axios.post("http://localhost:3001/makeorder/createorder", {
       phoneNumber: phoneNumber,
       address: address,
@@ -24,6 +29,7 @@ const MakeOrder = () => {
       navigate("/dashboard");
     })
     .catch(() => navigate("/error"));
+  }
   };
 
   return (
@@ -49,6 +55,10 @@ const MakeOrder = () => {
             format="Format: 12-345"
             pattern="[0-9]{2}-[0-9]{3}"
           />
+          {wrong && 
+          <div>
+            <h4>Niepoprawne dane logowania</h4>
+            </div>}
         </div>
         <div className={styles.center}>
           <button
