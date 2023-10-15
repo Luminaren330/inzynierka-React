@@ -6,7 +6,9 @@ import Orders from "./components/Orders/Orders";
 import Workers from "./components/Workers/Workers";
 import AddWorker from "./components/AddWorker/AddWorker";
 import AddProduct from "./components/AddProduct/AddProduct";
-import Error from "./components/Error/Error"
+import Error from "./components/Error/Error";
+import Login from "./components/Login/Login";
+import { useGlobalContext } from "./components/context/context";
 
 import {
   BrowserRouter as Router,
@@ -16,6 +18,7 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const { isLogedIn, isAdmin } = useGlobalContext();
   return (
     <>
       <Router>
@@ -24,11 +27,24 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/makeorder" element={<MakeOrder />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/workers" element={<Workers />} />
-          <Route path="/workers/addworker" element={<AddWorker/>}/>
-          <Route path = "/products/addnewproduct" element={<AddProduct/>}/>
-          <Route path = "/error" element={<Error/>}/>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/orders"
+            element={isLogedIn ? <Orders /> : <Navigate to="/dashboard" />}
+          />
+          <Route
+            path="/workers"
+            element={isAdmin ? <Workers /> : <Navigate to="/dashboard" />}
+          />
+          <Route
+            path="/workers/addworker"
+            element={isAdmin ? <AddWorker /> : <Navigate to="/dashboard" />}
+          />
+          <Route
+            path="/products/addnewproduct"
+            element={isAdmin ? <AddProduct /> : <Navigate to="/dashboard" />}
+          />
+          <Route path="/error" element={<Error />} />
         </Routes>
       </Router>
     </>

@@ -1,16 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { links } from "../../data/navbar-data";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.scss";
 import { FaHome } from "react-icons/fa";
+import { useGlobalContext } from "../context/context";
 
 const Navbar = () => {
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef(null);
   const linksRef = useRef(null);
-  const [isLogedIn, SetIsLogedIn] = useState(false);
+  const { isLogedIn, isAdmin, setIsLogedIn, setIsAdmin } = useGlobalContext();
   const logedInText = isLogedIn ? "Wyloguj" : "Zaloguj";
+  const navigate = useNavigate();
+
   useEffect(() => {
     const linksHeight = linksRef.current.getBoundingClientRect().height;
     if (showLinks) {
@@ -19,6 +22,18 @@ const Navbar = () => {
       linksContainerRef.current.style.height = "0px";
     }
   }, [showLinks]);
+
+  const handleLogin = () => {
+    if (!isLogedIn) {
+      navigate("/login");
+    } else {
+      setIsAdmin(false);
+      setIsLogedIn(false);
+      alert("Pomyślnie wylogowano");
+      navigate("/dashboard");
+    }
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.nav_center}>
@@ -39,18 +54,22 @@ const Navbar = () => {
           <ul className={styles.links} ref={linksRef}>
             {links.map((linkers) => {
               const { id, link, text } = linkers;
-              return (
-                <li key={id}>
-                  <Link to={link}>{text}</Link>
-                </li>
-              );
+              if (id < 2 || (id < 3 && isLogedIn) || isAdmin) {
+                return (
+                  <li key={id}>
+                    <Link to={link}>{text}</Link>
+                  </li>
+                );
+              } else {
+                return;
+              }
             })}
             <>
               <li className="links">
                 <button
                   type="button"
                   className={styles.logout_button}
-                  onClick={() => SetIsLogedIn(!isLogedIn)}
+                  onClick={() => handleLogin()}
                 >
                   {logedInText}
                 </button>

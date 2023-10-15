@@ -13,7 +13,7 @@ const getProducts = (req, res) => {
   );
 };
 
-const addNewProduct = async (req,res) => {
+const addNewProduct = async (req, res) => {
   const name = req.body.name;
   const magazine = req.body.magazine;
   const material = req.body.material;
@@ -32,22 +32,43 @@ const addNewProduct = async (req,res) => {
           }
         });
       });
-    }; 
+    };
 
     const objectSidResult = await executeQuery(
       "SELECT MAX(OBJECTSID) as objectSid FROM OBJECT"
     );
-    const objectSid = objectSidResult[0].objectSid +1 ;
-    await executeQuery(
-      "INSERT INTO OBJECT VALUES (?, ?, ?, ?, ?, ?, ?)", [
-        objectSid, name, magazine, material, unitPrice, amount, category
-      ])
-      console.log("Added new product");
-      res.send("Added new product");
+    const objectSid = objectSidResult[0].objectSid + 1;
+    await executeQuery("INSERT INTO OBJECT VALUES (?, ?, ?, ?, ?, ?, ?)", [
+      objectSid,
+      name,
+      magazine,
+      material,
+      unitPrice,
+      amount,
+      category,
+    ]);
+    console.log("Added new product");
+    res.send("Added new product");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding new product");
   }
-}
+};
 
-module.exports = {getProducts, addNewProduct}
+const addProduct = (req, res) => {
+  const id = req.body.ObjectSID;
+  const amount = req.body.Amount;
+  db.query(
+    "UPDATE OBJECT SET Amount = Amount + ? WHERE ObjectSid = ?",
+    [amount, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+};
+
+module.exports = { getProducts, addNewProduct, addProduct };

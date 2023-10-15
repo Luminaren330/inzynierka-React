@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Filter from "./Filter";
 import Catalog from "./Catalog";
 import Cart from "./Cart";
+import { useGlobalContext } from "../context/context";
 
 const Products = () => {
   const [productList, setProductList] = useState([]);
@@ -14,24 +15,26 @@ const Products = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
-
+  const { isAdmin } = useGlobalContext();
 
   const getProducts = useCallback(() => {
-    Axios.get("http://localhost:3001/products").then((response) => {
-      setProductList(response.data);
-      const uniqueCategories = [
-        ...new Set(response.data.map((product) => product.Category)),
-      ];
-      setCategoryList(uniqueCategories);
-    })
-    .catch(() => navigate("/error"));
-  },[navigate]);
+    Axios.get("http://localhost:3001/products")
+      .then((response) => {
+        setProductList(response.data);
+        const uniqueCategories = [
+          ...new Set(response.data.map((product) => product.Category)),
+        ];
+        setCategoryList(uniqueCategories);
+      })
+      .catch(() => navigate("/error"));
+  }, [navigate]);
 
   const getCart = useCallback(() => {
-    Axios.get("http://localhost:3001/products/cart").then((response) => {
-      setCart(response.data);
-    })
-    .catch(() => navigate("/error"));
+    Axios.get("http://localhost:3001/products/cart")
+      .then((response) => {
+        setCart(response.data);
+      })
+      .catch(() => navigate("/error"));
   }, [navigate]);
 
   useEffect(() => {
@@ -39,8 +42,6 @@ const Products = () => {
     getProducts();
     getCart();
   }, [cart, getCart, getProducts, productList]);
-
-  
 
   const filteredProductList = productList.filter((product) => {
     return filterCategory === "" || product.Category === filterCategory;
@@ -59,8 +60,12 @@ const Products = () => {
         <div className={styles.center}>
           <Catalog filteredProductList={filteredProductList} />
         </div>
-        <h2 className={styles.header}>Twój koszyk</h2>
-        <Cart cart={cart} />
+        {!isAdmin && (
+          <>
+            <h2 className={styles.header}>Twój koszyk</h2>
+            <Cart cart={cart} />
+          </>
+        )}
         {cart.length > 0 && (
           <Link to="/makeorder" className={styles.makeOrder}>
             Złóż zamówienie
