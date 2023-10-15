@@ -2,17 +2,21 @@ import React, { useCallback } from "react";
 import styles from "./Products.module.scss";
 import Axios from "axios";
 import { FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ cart }) => {
+  const navigate = useNavigate();
+
   const deleteCart = useCallback(
     (id) => {
       Axios.delete(`http://localhost:3001/products/deletecart/${id}`, {}).then(
         () => {
           alert("Usunięto z koszyka");
         }
-      );
+      )
+      .catch(() => navigate("/error"));
     },
-    [cart]
+    [navigate]
   );
 
   return (

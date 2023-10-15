@@ -45,7 +45,8 @@ const AddProduct = () => {
         }).then(()=> {
             alert("Dodano nowy produkt");
             navigate("/products");
-        });
+        })
+        .catch(() => navigate("/error"));
     }
 
     return (

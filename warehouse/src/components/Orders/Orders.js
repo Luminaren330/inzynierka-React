@@ -2,26 +2,30 @@ import styles from "../Products/Products.module.scss";
 import Navbar from "../Navbar/Navbar";
 import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     getOrders();
-  }, [orders]);
+  });
 
-  const getOrders = () => {
+  const getOrders = useCallback(() => {
     Axios.get("http://localhost:3001/orders").then((response) => {
       setOrders(response.data);
-    });
-  };
+    })
+    .catch(() => navigate("/error"));
+  },[navigate]);
 
   const orderEnded = useCallback(
     (Id) => {
       Axios.delete(`http://localhost:3001/orders/${Id}`, {}).then(() => {
         alert("Zamówienie " + Id + " zostało zrealizowane");
-      });
+      })
+      .catch(() => navigate("/error"));
     },
-    [orders]
+    [navigate]
   );
   return (
     <>

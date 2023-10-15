@@ -15,8 +15,8 @@ const Filter = ({ categoryList, filterCategory, setFilterCategory }) => {
         onChange={handleFilterChange}
       >
         <option value="">Wszystkie</option>
-        {categoryList.map((category) => {
-          return <option value={category}>{category}</option>;
+        {categoryList.map((category, key) => {
+          return <option key={key} value={category}>{category}</option>;
         })}
       </select>
     </div>

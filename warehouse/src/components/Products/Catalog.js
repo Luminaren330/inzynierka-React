@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./Products.module.scss";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Catalog = ({ filteredProductList }) => {
+  const navigate = useNavigate();
   const addToCart = (Id, amount) => {
     if (!isNaN(amount)) {
       Axios.post("http://localhost:3001/products/cartadd", {
@@ -10,7 +12,8 @@ const Catalog = ({ filteredProductList }) => {
         Amount: amount,
       }).then(() => {
         alert("Dodano produkt do koszyka");
-      });
+      })
+      .catch(() => navigate("/error"));
     } else {
       alert("Nie można dodać 0 przedmiotów do koszyka");
     }

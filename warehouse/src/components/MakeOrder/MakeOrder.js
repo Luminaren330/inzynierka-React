@@ -22,7 +22,8 @@ const MakeOrder = () => {
     }).then(() => {
       alert("Zamówienie zostało złożone");
       navigate("/dashboard");
-    });
+    })
+    .catch(() => navigate("/error"));
   };
 
   return (

@@ -31,7 +31,8 @@ const AddWorker = () => {
         }).then(()=> {
             alert("Dodano pracownika");
             navigate("/workers");
-        });
+        })
+        .catch(() => navigate("/error"));
     }
     return (
         <>
