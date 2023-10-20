@@ -61,7 +61,7 @@ const Navbar = () => {
                   </li>
                 );
               } else {
-                return;
+                return <></>;
               }
             })}
             <>
