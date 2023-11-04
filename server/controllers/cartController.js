@@ -73,7 +73,7 @@ const addCart = async (req, res) => {
       [itemCount, amount, id, itemsPrice, orderCount, 0]
     );
     console.log("Added to cart");
-    res.send("Added to Cart");
+    res.json({text: "Dodano do koszyka"});
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding to Cart");
@@ -115,7 +115,7 @@ const deleteCart = async (req, res) => {
     await executeQuery("DELETE FROM ITEMS WHERE CargoId = ?", [id]);
 
     console.log("Deleted from cart");
-    res.send("Deleted from cart");
+    res.json({text: "Usunięto z koszyka"});
   } catch (err) {
     console.error(err);
     res.status(500).send("Error deleting from cart");

@@ -15,7 +15,7 @@ const Products = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
-  const { isAdmin } = useGlobalContext();
+  const { isLogedIn } = useGlobalContext();
 
   const getProducts = useCallback(() => {
     Axios.get("http://localhost:3001/products")
@@ -60,7 +60,7 @@ const Products = () => {
         <div className={styles.center}>
           <Catalog filteredProductList={filteredProductList} />
         </div>
-        {!isAdmin && (
+        {!isLogedIn && (
           <>
             <h2 className={styles.header}>Twój koszyk</h2>
             <Cart cart={cart} />

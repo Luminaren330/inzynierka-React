@@ -2,7 +2,7 @@ const db = require("../db");
 
 const getProducts = (req, res) => {
   db.query(
-    "SELECT ObjectSID, Name, Material, UnitPrice, Category, Amount FROM OBJECT",
+    "SELECT ObjectSID, Name, MagazinePlacement, Material, UnitPrice, Category, Amount FROM OBJECT",
     (err, result) => {
       if (err) {
         console.log(err);
@@ -48,7 +48,7 @@ const addNewProduct = async (req, res) => {
       category,
     ]);
     console.log("Added new product");
-    res.send("Added new product");
+    res.json({text: "Dodano nowy produkt"});
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding new product");

@@ -1,7 +1,7 @@
 import styles from "./AddProduct.module.scss";
 import React from "react";
 
-const IntInput = ({ string, setParameter }) => {
+const FloatInput = ({ string, setParameter }) => {
   return (
     <>
       <label htmlFor={string} className={styles.formLabel}>
@@ -17,4 +17,4 @@ const IntInput = ({ string, setParameter }) => {
     </>
   );
 };
-export default IntInput;
+export default FloatInput;

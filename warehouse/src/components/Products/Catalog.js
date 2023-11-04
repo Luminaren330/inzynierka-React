@@ -44,11 +44,13 @@ const Catalog = ({ filteredProductList }) => {
         <tr>
           <th className={styles.head}>Kategoria</th>
           <th className={styles.head}>Nazwa</th>
-          {isLogedIn && <th className={styles.head}>Materiał</th>}
+          <th className={styles.head}>Materiał</th>
+          {(isLogedIn && !isAdmin) && <th className={styles.head}>Magazyn</th>}
           <th className={styles.head}>Cena jednostkowa</th>
-          <th className={styles.head}>Ilość dostępna</th>
-          <th className={styles.head}>Ilość do koszyka</th>
-          <th className={styles.head}></th>
+          <th className={styles.head}>Ilość dostępna</th>  
+          {isAdmin && <th className={styles.head}>Dodaj ilość</th>}
+          {!isLogedIn && <th className={styles.head}>Ilość do koszyka</th>}
+          {(!isLogedIn || isAdmin) && <th className={styles.head}></th>}
         </tr>
       </thead>
       <tbody>
@@ -61,19 +63,20 @@ const Catalog = ({ filteredProductList }) => {
                 </td>
                 <td className={styles.tdList}>
                   <p>{product.Name}</p>
-                </td>
-                {isLogedIn && (
+                </td>          
                   <td className={styles.tdList}>
                     <p>{product.Material}</p>
                   </td>
-                )}
+                  {(isLogedIn && !isAdmin) && <td className={styles.tdList}>
+                  <p>{product.MagazinePlacement}</p>
+                </td>}
                 <td className={styles.tdList}>
                   <p>{product.UnitPrice} zł</p>
                 </td>
                 <td className={styles.tdList}>
                   <p>{product.Amount}</p>
                 </td>
-                <td className={styles.tdList}>
+                {(!isLogedIn || isAdmin) && <td className={styles.tdList}>
                   <input
                     type="number"
                     min="1"
@@ -82,9 +85,10 @@ const Catalog = ({ filteredProductList }) => {
                     className={styles.cartAmount}
                     id={`amount${product.ObjectSID}`}
                   />
-                </td>
+                </td> }
+                {(!isLogedIn) && (
                 <td className={styles.tdList}>
-                  {!isAdmin && (
+                  
                     <button
                       className={styles.cartAdd}
                       onClick={() => {
@@ -97,8 +101,10 @@ const Catalog = ({ filteredProductList }) => {
                     >
                       Dodaj do koszyka
                     </button>
+                    </td>
                   )}
                   {isAdmin && (
+                    <td className={styles.tdList}>
                     <button
                       className={styles.cartAdd}
                       onClick={() => {
@@ -111,8 +117,8 @@ const Catalog = ({ filteredProductList }) => {
                     >
                       Dodaj ilość produktów
                     </button>
-                  )}
-                </td>
+                    </td>
+                  )}           
               </tr>
             );
           }

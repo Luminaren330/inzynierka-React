@@ -66,7 +66,7 @@ const createOrder = async (req, res) => {
       orderId,
     ]);
     console.log("Added order");
-    res.send("Added order");
+    res.json({text: "Zamówienie zostało złożone"});
   } catch (err) {
     console.error(err);
     res.status(500).send("Error creating order");
@@ -134,7 +134,7 @@ const deleteOrder = async (req, res) => {
     await executeQuery("DELETE FROM CLIENT WHERE ClientId = ?", [id]);
 
     console.log("Order ended");
-    res.send("Order ended");
+    res.json({text: "Zamówienie zrealizowane"});
   } catch (err) {
     console.error(err);
     res.status(500).send("Error deleting order");

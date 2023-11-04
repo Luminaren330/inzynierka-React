@@ -22,7 +22,7 @@ const AddProduct = () => {
     ];
 
     const categoryOptions = [
-        'Filtr', 'Hamulce', 'Akumulatory', 'Tłumik' 
+        'Filtr', 'Hamulec', 'Akumulator', 'Tłumik' 
     ]
 
     const MagazineSet = (event) => {

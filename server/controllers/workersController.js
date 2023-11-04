@@ -1,3 +1,4 @@
+const { text } = require("express");
 const db = require("../db");
 
 const getWorkers = (req, res) => {
@@ -52,7 +53,7 @@ const addWorker = async (req,res) => {
       ]
     )
     console.log("Added worker");
-    res.send("Added worker");
+    res.json({text: "Dodano pracownika"});
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding worker");
