@@ -12,24 +12,29 @@ const MakeOrder = () => {
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState("");
   const navigate = useNavigate();
-  const [wrong,setWrong] = useState(false);
+  const [wrong, setWrong] = useState(false);
 
   const createOrder = () => {
-    if(isNaN(phoneNumber) || phoneNumber.length !==9 || zipcode.length !== 6 || !zipcode.includes('-')) {
+    if (
+      isNaN(phoneNumber) ||
+      phoneNumber.length !== 9 ||
+      zipcode.length !== 6 ||
+      !zipcode.includes("-")
+    ) {
       setWrong(true);
+    } else {
+      Axios.post("http://localhost:3001/makeorder/createorder", {
+        phoneNumber: phoneNumber,
+        address: address,
+        zipcode: zipcode,
+        name: name,
+      })
+        .then(() => {
+          alert("Zamówienie zostało złożone");
+          navigate("/dashboard");
+        })
+        .catch(() => navigate("/error"));
     }
-    else { 
-    Axios.post("http://localhost:3001/makeorder/createorder", {
-      phoneNumber: phoneNumber,
-      address: address,
-      zipcode: zipcode,
-      name: name,
-    }).then(() => {
-      alert("Zamówienie zostało złożone");
-      navigate("/dashboard");
-    })
-    .catch(() => navigate("/error"));
-  }
   };
 
   return (
@@ -38,27 +43,31 @@ const MakeOrder = () => {
       <div>
         <h2 className={styles.header}>Złóż zamówienie</h2>
         <div className={styles.form}>
-          <StringInput string="Imię: " setParameter={setName} />
+          <StringInput id="name" string="Imię: " setParameter={setName} />
           <FormatInput
+            id="phoneNumber"
             string="Nr telefonu:"
             setParameter={setPhoneNumber}
             format="Format: 123456124"
             pattern="[0-9]{9}"
           />
           <StringInput
+            id="address"
             string="Adres zamieszkania: "
             setParameter={setAddress}
           />
           <FormatInput
+            id="zipcode"
             string="Kod pocztowy:"
             setParameter={setZipcode}
             format="Format: 12-345"
             pattern="[0-9]{2}-[0-9]{3}"
           />
-          {wrong && 
-          <div>
-            <h4>Niepoprawne dane logowania</h4>
-            </div>}
+          {wrong && (
+            <div>
+              <h4>Niepoprawne dane logowania</h4>
+            </div>
+          )}
         </div>
         <div className={styles.center}>
           <button

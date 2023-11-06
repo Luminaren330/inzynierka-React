@@ -47,16 +47,18 @@ const Login = () => {
       <div className={styles.login}>
         <h3 className={styles.title}>Zaloguj się </h3>
         <div className={styles.labels}>
-          <label htmlFor="Nazwa użytkownika">Nazwa użytkownika: </label>
+          <label htmlFor="username">Nazwa użytkownika: </label>
           <input
+            id="username"
             type="text"
             className={styles.input}
             onChange={(event) => setLogin(event.target.value)}
           ></input>
         </div>
         <div className={styles.labels}>
-          <label htmlFor="Hasło">Hasło: </label>
+          <label htmlFor="password">Hasło: </label>
           <input
+            id="password"
             type="text"
             className={styles.input}
             onChange={(event) => setPassword(event.target.value)}

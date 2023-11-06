@@ -1,15 +1,16 @@
 import styles from "./AddProduct.module.scss";
 import React from "react";
 
-const IntInput = ({ string, setParameter }) => {
+const IntInput = ({ id, string, setParameter }) => {
   return (
     <>
-      <label htmlFor={string} className={styles.formLabel}>
+      <label htmlFor={id} className={styles.formLabel}>
         {string}
       </label>
       <input
+        id={id}
         type="number"
-        min = "1"
+        min="1"
         className={styles.formInput}
         onChange={(event) => setParameter(event.target.value)}
       ></input>

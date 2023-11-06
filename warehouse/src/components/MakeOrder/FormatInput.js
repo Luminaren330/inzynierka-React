@@ -1,16 +1,17 @@
 import styles from "./MakeOrder.module.scss";
 import React from "react";
 
-const FormatInput = ({ string, setParameter, format, pattern }) => {
+const FormatInput = ({ id, string, setParameter, format, pattern }) => {
   return (
     <>
       <div className={styles.format}>
-        <label htmlFor={string} className={styles.formLabel}>
+        <label htmlFor={id} className={styles.formLabel}>
           {string}
         </label>
         <small className={styles.smallForm}> {format}</small>
       </div>
       <input
+        id={id}
         type="tel"
         pattern={pattern}
         required
