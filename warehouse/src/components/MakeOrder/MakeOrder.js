@@ -13,10 +13,17 @@ const MakeOrder = () => {
   const [zipcode, setZipcode] = useState("");
   const navigate = useNavigate();
   const [wrong,setWrong] = useState(false);
+  const [empty, setEmpty] = useState(false);
 
   const createOrder = () => {
-    if(isNaN(phoneNumber) || phoneNumber.length !==9 || zipcode.length !== 6 || !zipcode.includes('-')) {
+    setEmpty(false);
+    setWrong(false);
+    if(isNaN(phoneNumber) || phoneNumber.length !==9 || 
+    zipcode.length !== 6 || !zipcode.includes('-')) {
       setWrong(true);
+    }
+    else if (name.length < 3 || address.length < 10) {
+      setEmpty(true);
     }
     else { 
     Axios.post("http://localhost:3001/makeorder/createorder", {
@@ -56,8 +63,12 @@ const MakeOrder = () => {
             pattern="[0-9]{2}-[0-9]{3}"
           />
           {wrong && 
-          <div>
+          <div className={styles.wrong}>
             <h4>Niepoprawne dane logowania</h4>
+            </div>}
+            {empty && 
+          <div className={styles.wrong}>
+            <h4>Długosć imienia lub adresu jest za krótka</h4>
             </div>}
         </div>
         <div className={styles.center}>

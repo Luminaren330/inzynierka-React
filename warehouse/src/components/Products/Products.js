@@ -64,13 +64,13 @@ const Products = () => {
           <>
             <h2 className={styles.header}>Twój koszyk</h2>
             <Cart cart={cart} />
-          </>
-        )}
-        {cart.length > 0 && (
+            {cart.length > 0 && (
           <Link to="/makeorder" className={styles.makeOrder}>
             Złóż zamówienie
           </Link>
         )}
+          </>
+        )}      
       </div>
     </>
   );

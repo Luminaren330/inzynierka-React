@@ -54,6 +54,20 @@
     }  
 }
 
+.wrong {
+    text-align: center;
+    background-color: rgb(241, 7, 7);
+    border-radius: 20px;
+    border: none;
+    margin: 10px;
+}
+
+.wrong h4 {
+    font-size: 25px;
+    color: white;
+    margin-top: 5px;
+}
+
 @media screen and (max-width: 1500px) {
 
     .formInput {

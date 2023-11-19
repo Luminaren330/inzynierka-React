@@ -13,6 +13,7 @@ const AddWorker = () => {
     const [surname,setSurname] = useState('');
     const [phoneNumber, setPhoneNumber] = useState(0);
     const [position, setPosition] = useState('Sprzedawca');
+    const [empty, setEmpty] = useState(false);
     const navigate = useNavigate();
     const options = [
       'Sprzedawca', 'Magazynier', 'Menadżer'
@@ -24,8 +25,13 @@ const AddWorker = () => {
     }
 
     const addWorker = () => {
+      setEmpty(false);
+      setWrong(false);
       if(isNaN(phoneNumber) || phoneNumber.length !==9 ) {
         setWrong(true);
+      }
+      else if(name.length < 3 || surname.length < 3) {
+        setEmpty(true);
       }
       else { 
         Axios.post("http://localhost:3001/workers/addworker", {
@@ -59,10 +65,14 @@ const AddWorker = () => {
           value = {position}
           string = "Stanowisko"
           setFunction = {PositionSet}/>
-          {wrong && <div>
+          {wrong && <div className={styles.wrong}>
             <h4>Niepoprawny format numeru telefonu</h4>
             </div>
             }
+             {empty && 
+          <div className={styles.wrong}>
+            <h4>Długosć imienia lub nazwiska jest za krótka</h4>
+            </div>}
             </div>
             <div className={styles.center}>
           <button
