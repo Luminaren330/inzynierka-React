@@ -61,11 +61,11 @@ const Navbar = () => {
                   </li>
                 );
               } else {
-                return <></>;
+                return null;
               }
             })}
             <>
-              <li className="links">
+              <li className={styles.links}>
                 <button
                   type="button"
                   className={styles.logout_button}

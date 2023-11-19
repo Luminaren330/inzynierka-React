@@ -7,7 +7,6 @@ import Dropdown from "./Dropdown";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 const AddWorker = () => {
     const [name,setName] = useState('');
     const [surname,setSurname] = useState('');
@@ -20,10 +19,10 @@ const AddWorker = () => {
     ]
     const [wrong,setWrong] = useState(false);
 
-    const PositionSet = (event) => {
-      setPosition(event.target.value);
-    }
 
+  const PositionSet = (event) => {
+    setPosition(event.target.value);
+  };
     const addWorker = () => {
       setEmpty(false);
       setWrong(false);
@@ -43,50 +42,61 @@ const AddWorker = () => {
             alert("Dodano pracownika");
             navigate("/workers");
             setWrong(false);
+
         })
         .catch(() => navigate("/error"));
-      }
     }
-    return (
-        <>
-        <Navbar></Navbar>
-        <div>
-            <h2 className={styles.header}>Dodaj pracownika</h2>
-            <div className={styles.form}>
-            <StringInput string="Imię: " setParameter={setName} />
-            <StringInput string="Nazwisko: " setParameter={setSurname} />
-            <FormatInput
+  };
+  return (
+    <>
+      <Navbar></Navbar>
+      <div>
+        <h2 className={styles.header}>Dodaj pracownika</h2>
+        <div className={styles.form}>
+          <StringInput id="name" string="Imię: " setParameter={setName} />
+          <StringInput
+            id="surname"
+            string="Nazwisko: "
+            setParameter={setSurname}
+          />
+          <FormatInput
+            id="phoneNumber"
             string="Nr telefonu:"
             setParameter={setPhoneNumber}
             format="Format: 123456124"
             pattern="[0-9]{9}"
           />
-          <Dropdown options = {options}
-          value = {position}
-          string = "Stanowisko"
-          setFunction = {PositionSet}/>
-          {wrong && <div className={styles.wrong}>
-            <h4>Niepoprawny format numeru telefonu</h4>
+
+          <Dropdown
+            id="position"
+            options={options}
+            value={position}
+            string="Stanowisko"
+            setFunction={PositionSet}
+          />
+          {wrong && (
+            <div className={styles.wrong}>
+              <h4>Niepoprawny format numeru telefonu</h4>
             </div>
-            }
-             {empty && 
+          )}
+           {empty && 
           <div className={styles.wrong}>
             <h4>Długosć imienia lub nazwiska jest za krótka</h4>
             </div>}
-            </div>
-            <div className={styles.center}>
+        </div>
+        <div className={styles.center}>
           <button
             className={styles.addWorker}
-            onClick = {() => {
-                addWorker();
+            onClick={() => {
+              addWorker();
             }}
           >
             Dodaj
           </button>
         </div>
-        </div>
-        </>
-    )
-}
+      </div>
+    </>
+  );
+};
 
 export default AddWorker;

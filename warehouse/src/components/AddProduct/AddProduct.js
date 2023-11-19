@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import StringInput from "../MakeOrder/StringInput";
 import IntInput from "./IntInput";
-import FloatInput from "./FloatInput"
+import FloatInput from "./FloatInput";
 import Dropdown from "../AddWorker/Dropdown";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -19,21 +19,18 @@ const AddProduct = () => {
     const [badPrice, setBadPrice] = useState(false);
     const navigate = useNavigate();
 
-    const magazineOptions = [
-        'A', 'B', 'C'
-    ];
 
-    const categoryOptions = [
-        'Filtr', 'Hamulec', 'Akumulator', 'Tłumik' 
-    ]
+  const magazineOptions = ["A", "B", "C"];
 
-    const MagazineSet = (event) => {
-        setMagazine(event.target.value);
-    }
+  const categoryOptions = ["Filtr", "Hamulec", "Akumulator", "Tłumik"];
 
-    const CategorySet = (event) => {
-        setCategory(event.target.value);
-    }
+  const MagazineSet = (event) => {
+    setMagazine(event.target.value);
+  };
+
+  const CategorySet = (event) => {
+    setCategory(event.target.value);
+  };
 
     const addNewProduct = () => {
         setBadPrice(false);
@@ -86,20 +83,21 @@ const AddProduct = () => {
           <div className={styles.wrong}>
             <h4>Ilość lub cena jest mniejsza od 0</h4>
             </div>}
+
         </div>
         <div className={styles.center}>
           <button
             className={styles.addProduct}
-            onClick = {() => {
-                addNewProduct();
+            onClick={() => {
+              addNewProduct();
             }}
           >
             Dodaj
           </button>
         </div>
-        </div>
-        </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
 export default AddProduct;

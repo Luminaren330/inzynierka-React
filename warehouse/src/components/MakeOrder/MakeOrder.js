@@ -20,8 +20,9 @@ const MakeOrder = () => {
     setWrong(false);
     if(isNaN(phoneNumber) || phoneNumber.length !==9 || 
     zipcode.length !== 6 || !zipcode.includes('-')) {
+
       setWrong(true);
-    }
+    } 
     else if (name.length < 3 || address.length < 10) {
       setEmpty(true);
     }
@@ -45,18 +46,21 @@ const MakeOrder = () => {
       <div>
         <h2 className={styles.header}>Złóż zamówienie</h2>
         <div className={styles.form}>
-          <StringInput string="Imię: " setParameter={setName} />
+          <StringInput id="name" string="Imię: " setParameter={setName} />
           <FormatInput
+            id="phoneNumber"
             string="Nr telefonu:"
             setParameter={setPhoneNumber}
             format="Format: 123456124"
             pattern="[0-9]{9}"
           />
           <StringInput
+            id="address"
             string="Adres zamieszkania: "
             setParameter={setAddress}
           />
           <FormatInput
+            id="zipcode"
             string="Kod pocztowy:"
             setParameter={setZipcode}
             format="Format: 12-345"
@@ -70,6 +74,7 @@ const MakeOrder = () => {
           <div className={styles.wrong}>
             <h4>Długosć imienia lub adresu jest za krótka</h4>
             </div>}
+
         </div>
         <div className={styles.center}>
           <button
