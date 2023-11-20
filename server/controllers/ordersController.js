@@ -69,7 +69,7 @@ const createOrder = async (req, res) => {
     res.json({ text: "Zamówienie zostało złożone" });
   } catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).send("Error creating order");
   }
 };
 
