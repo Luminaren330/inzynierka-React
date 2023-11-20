@@ -6,6 +6,7 @@ const cartRoutes = require("./routes/cart");
 const ordersRoutes = require("./routes/orders");
 const workerRoutes = require("./routes/workers");
 const loginRoutes = require("./routes/login");
+require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
@@ -27,6 +28,6 @@ app.delete("/orders/:id", ordersRoutes);
 app.get("/workers", workerRoutes);
 app.post("/workers/addworker", workerRoutes);
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("Listening on port 3001");
 });
