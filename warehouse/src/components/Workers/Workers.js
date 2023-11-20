@@ -9,9 +9,11 @@ const Workers = () => {
   const [index, setIndex] = useState(0);
 
   const getWorkers = async () => {
-    await Axios.get("http://localhost:3001/workers").then((response) => {
-      setWorkers(response.data);
-    });
+    await Axios.get("https://mysql-warehouse.onrender.com/workers").then(
+      (response) => {
+        setWorkers(response.data);
+      }
+    );
   };
 
   useEffect(() => {

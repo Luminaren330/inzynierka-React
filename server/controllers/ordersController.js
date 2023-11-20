@@ -66,10 +66,10 @@ const createOrder = async (req, res) => {
       orderId,
     ]);
     console.log("Added order");
-    res.json({text: "Zamówienie zostało złożone"});
+    res.json({ text: "Zamówienie zostało złożone" });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error creating order");
+    res.status(500).send("Error creating orders");
   }
 };
 
@@ -83,13 +83,13 @@ const getOrders = (req, res) => {
   const objectJoin =
     "FROM ((((ITEMS INNER JOIN OBJECT ON ITEMS.Object_ObjectSID = OBJECT.ObjectSID) ";
 
-  const orderJoin = "INNER JOIN `Order` ON ITEMS.OrderId = `Order`.OrderId) ";
+  const orderJoin = "INNER JOIN `ORDER` ON ITEMS.OrderId = `ORDER`.OrderId) ";
 
   const clientJoin =
-    "INNER JOIN CLIENT ON CLIENT.ClientId = `Order`.Client_ClientId) ";
+    "INNER JOIN CLIENT ON CLIENT.ClientId = `ORDER`.Client_ClientId) ";
 
   const workerJoin =
-    "INNER JOIN WORKER ON WORKER.WorkerId = `Order`.Worker_WorkerId) ";
+    "INNER JOIN WORKER ON WORKER.WorkerId = `ORDER`.Worker_WorkerId) ";
 
   const whereClause = "WHERE `ORDER`.OrderStatus = 0 GROUP BY `ORDER`.OrderId";
 
@@ -134,7 +134,7 @@ const deleteOrder = async (req, res) => {
     await executeQuery("DELETE FROM CLIENT WHERE ClientId = ?", [id]);
 
     console.log("Order ended");
-    res.json({text: "Zamówienie zrealizowane"});
+    res.json({ text: "Zamówienie zrealizowane" });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error deleting order");

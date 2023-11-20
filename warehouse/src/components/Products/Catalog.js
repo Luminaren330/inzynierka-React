@@ -10,7 +10,7 @@ const Catalog = ({ filteredProductList }) => {
 
   const addToCart = (Id, amount) => {
     if (!isNaN(amount)) {
-      Axios.post("http://localhost:3001/products/cartadd", {
+      Axios.post("https://mysql-warehouse.onrender.com/products/cartadd", {
         ObjectSID: Id,
         Amount: amount,
       })
@@ -25,7 +25,7 @@ const Catalog = ({ filteredProductList }) => {
 
   const addProduct = (Id, amount) => {
     if (!isNaN(amount)) {
-      Axios.put("http://localhost:3001/products/addproduct", {
+      Axios.put("https://mysql-warehouse.onrender.com/products/addproduct", {
         ObjectSID: Id,
         Amount: amount,
       })
@@ -45,9 +45,9 @@ const Catalog = ({ filteredProductList }) => {
           <th className={styles.head}>Kategoria</th>
           <th className={styles.head}>Nazwa</th>
           <th className={styles.head}>Materiał</th>
-          {(isLogedIn && !isAdmin) && <th className={styles.head}>Magazyn</th>}
+          {isLogedIn && !isAdmin && <th className={styles.head}>Magazyn</th>}
           <th className={styles.head}>Cena jednostkowa</th>
-          <th className={styles.head}>Ilość dostępna</th>  
+          <th className={styles.head}>Ilość dostępna</th>
           {isAdmin && <th className={styles.head}>Dodaj ilość</th>}
           {!isLogedIn && <th className={styles.head}>Ilość do koszyka</th>}
           {(!isLogedIn || isAdmin) && <th className={styles.head}></th>}
@@ -63,32 +63,35 @@ const Catalog = ({ filteredProductList }) => {
                 </td>
                 <td className={styles.tdList}>
                   <p>{product.Name}</p>
-                </td>          
+                </td>
+                <td className={styles.tdList}>
+                  <p>{product.Material}</p>
+                </td>
+                {isLogedIn && !isAdmin && (
                   <td className={styles.tdList}>
-                    <p>{product.Material}</p>
+                    <p>{product.MagazinePlacement}</p>
                   </td>
-                  {(isLogedIn && !isAdmin) && <td className={styles.tdList}>
-                  <p>{product.MagazinePlacement}</p>
-                </td>}
+                )}
                 <td className={styles.tdList}>
                   <p>{product.UnitPrice} zł</p>
                 </td>
                 <td className={styles.tdList}>
                   <p>{product.Amount}</p>
                 </td>
-                {(!isLogedIn || isAdmin) && <td className={styles.tdList}>
-                  <input
-                    type="number"
-                    min="1"
-                    max={product.Amount}
-                    placeholder="Ilość"
-                    className={styles.cartAmount}
-                    id={`amount${product.ObjectSID}`}
-                  />
-                </td> }
-                {(!isLogedIn) && (
-                <td className={styles.tdList}>
-                  
+                {(!isLogedIn || isAdmin) && (
+                  <td className={styles.tdList}>
+                    <input
+                      type="number"
+                      min="1"
+                      max={product.Amount}
+                      placeholder="Ilość"
+                      className={styles.cartAmount}
+                      id={`amount${product.ObjectSID}`}
+                    />
+                  </td>
+                )}
+                {!isLogedIn && (
+                  <td className={styles.tdList}>
                     <button
                       className={styles.cartAdd}
                       onClick={() => {
@@ -101,10 +104,10 @@ const Catalog = ({ filteredProductList }) => {
                     >
                       Dodaj do koszyka
                     </button>
-                    </td>
-                  )}
-                  {isAdmin && (
-                    <td className={styles.tdList}>
+                  </td>
+                )}
+                {isAdmin && (
+                  <td className={styles.tdList}>
                     <button
                       className={styles.cartAdd}
                       onClick={() => {
@@ -117,8 +120,8 @@ const Catalog = ({ filteredProductList }) => {
                     >
                       Dodaj ilość produktów
                     </button>
-                    </td>
-                  )}           
+                  </td>
+                )}
               </tr>
             );
           }

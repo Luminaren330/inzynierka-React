@@ -8,41 +8,36 @@ import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AddWorker = () => {
-    const [name,setName] = useState('');
-    const [surname,setSurname] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState(0);
-    const [position, setPosition] = useState('Sprzedawca');
-    const [empty, setEmpty] = useState(false);
-    const navigate = useNavigate();
-    const options = [
-      'Sprzedawca', 'Magazynier', 'Menadżer'
-    ]
-    const [wrong,setWrong] = useState(false);
-
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [position, setPosition] = useState("Sprzedawca");
+  const [empty, setEmpty] = useState(false);
+  const navigate = useNavigate();
+  const options = ["Sprzedawca", "Magazynier", "Menadżer"];
+  const [wrong, setWrong] = useState(false);
 
   const PositionSet = (event) => {
     setPosition(event.target.value);
   };
-    const addWorker = () => {
-      setEmpty(false);
-      setWrong(false);
-      if(isNaN(phoneNumber) || phoneNumber.length !==9 ) {
-        setWrong(true);
-      }
-      else if(name.length < 3 || surname.length < 3) {
-        setEmpty(true);
-      }
-      else { 
-        Axios.post("http://localhost:3001/workers/addworker", {
-            name: name,
-            surname: surname,
-            phoneNumber: phoneNumber,
-            position: position,
-        }).then(()=> {
-            alert("Dodano pracownika");
-            navigate("/workers");
-            setWrong(false);
-
+  const addWorker = () => {
+    setEmpty(false);
+    setWrong(false);
+    if (isNaN(phoneNumber) || phoneNumber.length !== 9) {
+      setWrong(true);
+    } else if (name.length < 3 || surname.length < 3) {
+      setEmpty(true);
+    } else {
+      Axios.post("https://mysql-warehouse.onrender.com/workers/addworker", {
+        name: name,
+        surname: surname,
+        phoneNumber: phoneNumber,
+        position: position,
+      })
+        .then(() => {
+          alert("Dodano pracownika");
+          navigate("/workers");
+          setWrong(false);
         })
         .catch(() => navigate("/error"));
     }
@@ -79,10 +74,11 @@ const AddWorker = () => {
               <h4>Niepoprawny format numeru telefonu</h4>
             </div>
           )}
-           {empty && 
-          <div className={styles.wrong}>
-            <h4>Długosć imienia lub nazwiska jest za krótka</h4>
-            </div>}
+          {empty && (
+            <div className={styles.wrong}>
+              <h4>Długosć imienia lub nazwiska jest za krótka</h4>
+            </div>
+          )}
         </div>
         <div className={styles.center}>
           <button
