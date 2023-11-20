@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
+    Axios.get("https://mysql-warehouse.onrender.com/login").then((response) => {
       setCredentials(response.data);
     });
   }, []);

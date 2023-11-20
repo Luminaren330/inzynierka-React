@@ -12,18 +12,20 @@ const Orders = () => {
   });
 
   const getOrders = useCallback(() => {
-    Axios.get("http://localhost:3001/orders").then((response) => {
-      setOrders(response.data);
-    })
-    .catch(() => navigate("/error"));
-  },[navigate]);
+    Axios.get("https://mysql-warehouse.onrender.com/orders")
+      .then((response) => {
+        setOrders(response.data);
+      })
+      .catch(() => navigate("/error"));
+  }, [navigate]);
 
   const orderEnded = useCallback(
     (Id) => {
-      Axios.delete(`http://localhost:3001/orders/${Id}`, {}).then(() => {
-        alert("Zamówienie " + Id + " zostało zrealizowane");
-      })
-      .catch(() => navigate("/error"));
+      Axios.delete(`https://mysql-warehouse.onrender.com/orders/${Id}`, {})
+        .then(() => {
+          alert("Zamówienie " + Id + " zostało zrealizowane");
+        })
+        .catch(() => navigate("/error"));
     },
     [navigate]
   );
