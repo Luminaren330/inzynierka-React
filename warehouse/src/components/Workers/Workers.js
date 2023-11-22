@@ -9,18 +9,16 @@ const Workers = () => {
   const [index, setIndex] = useState(0);
 
   const getWorkers = async () => {
-    await Axios.get("https://mysql-warehouse.onrender.com/workers").then(
-      (response) => {
-        setWorkers(response.data);
-      }
-    );
+    await Axios.get("http://localhost:3001/workers").then((response) => {
+      setWorkers(response.data);
+    });
   };
 
   useEffect(() => {
     getWorkers();
   }, []);
 
-  const worker = workers[index] || {}; // Use a default empty object if workers[index] is undefined
+  const worker = workers[index] || {};
   const { Name, Surname, PhoneNumber, Position } = worker;
   return (
     <>

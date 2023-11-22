@@ -39,17 +39,14 @@ const AddProduct = () => {
     } else if (amount <= 0 || unitPrice <= 0) {
       setBadPrice(true);
     } else {
-      Axios.post(
-        "https://mysql-warehouse.onrender.com/products/addnewproduct",
-        {
-          name: name,
-          magazine: magazine,
-          material: material,
-          unitPrice: unitPrice,
-          amount: amount,
-          category: category,
-        }
-      )
+      Axios.post("http://localhost:3001/products/addnewproduct", {
+        name: name,
+        magazine: magazine,
+        material: material,
+        unitPrice: unitPrice,
+        amount: amount,
+        category: category,
+      })
         .then(() => {
           alert("Dodano nowy produkt");
           navigate("/products");

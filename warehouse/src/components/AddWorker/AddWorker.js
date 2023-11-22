@@ -28,7 +28,7 @@ const AddWorker = () => {
     } else if (name.length < 3 || surname.length < 3) {
       setEmpty(true);
     } else {
-      Axios.post("https://mysql-warehouse.onrender.com/workers/addworker", {
+      Axios.post("http://localhost:3001/workers/addworker", {
         name: name,
         surname: surname,
         phoneNumber: phoneNumber,

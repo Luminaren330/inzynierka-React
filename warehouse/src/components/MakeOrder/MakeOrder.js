@@ -28,7 +28,7 @@ const MakeOrder = () => {
     } else if (name.length < 3 || address.length < 10) {
       setEmpty(true);
     } else {
-      Axios.post("https://mysql-warehouse.onrender.com/makeorder/createorder", {
+      Axios.post("http://localhost:3001/makeorder/createorder", {
         phoneNumber: phoneNumber,
         address: address,
         zipcode: zipcode,

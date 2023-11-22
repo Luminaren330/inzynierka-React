@@ -9,10 +9,7 @@ const Cart = ({ cart }) => {
 
   const deleteCart = useCallback(
     (id) => {
-      Axios.delete(
-        `https://mysql-warehouse.onrender.com/products/deletecart/${id}`,
-        {}
-      )
+      Axios.delete(`http://localhost:3001/products/deletecart/${id}`, {})
         .then(() => {
           alert("Usunięto z koszyka");
         })

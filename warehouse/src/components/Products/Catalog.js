@@ -10,7 +10,7 @@ const Catalog = ({ filteredProductList }) => {
 
   const addToCart = (Id, amount) => {
     if (!isNaN(amount)) {
-      Axios.post("https://mysql-warehouse.onrender.com/products/cartadd", {
+      Axios.post("http://localhost:3001/products/cartadd", {
         ObjectSID: Id,
         Amount: amount,
       })
@@ -25,7 +25,7 @@ const Catalog = ({ filteredProductList }) => {
 
   const addProduct = (Id, amount) => {
     if (!isNaN(amount)) {
-      Axios.put("https://mysql-warehouse.onrender.com/products/addproduct", {
+      Axios.put("http://localhost:3001/products/addproduct", {
         ObjectSID: Id,
         Amount: amount,
       })

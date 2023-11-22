@@ -18,7 +18,7 @@ const Products = () => {
   const { isLogedIn } = useGlobalContext();
 
   const getProducts = useCallback(() => {
-    Axios.get("https://mysql-warehouse.onrender.com/products")
+    Axios.get("http://localhost:3001/products")
       .then((response) => {
         setProductList(response.data);
         const uniqueCategories = [
@@ -30,7 +30,7 @@ const Products = () => {
   }, [navigate]);
 
   const getCart = useCallback(() => {
-    Axios.get("https://mysql-warehouse.onrender.com/products/cart")
+    Axios.get("http://localhost:3001/products/cart")
       .then((response) => {
         setCart(response.data);
       })
@@ -38,7 +38,6 @@ const Products = () => {
   }, [navigate]);
 
   useEffect(() => {
-    //console.log("Product");
     getProducts();
     getCart();
   }, [cart, getCart, getProducts, productList]);

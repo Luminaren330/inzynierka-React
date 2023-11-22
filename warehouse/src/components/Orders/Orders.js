@@ -12,7 +12,7 @@ const Orders = () => {
   });
 
   const getOrders = useCallback(() => {
-    Axios.get("https://mysql-warehouse.onrender.com/orders")
+    Axios.get("http://localhost:3001/orders")
       .then((response) => {
         setOrders(response.data);
       })
@@ -21,7 +21,7 @@ const Orders = () => {
 
   const orderEnded = useCallback(
     (Id) => {
-      Axios.delete(`https://mysql-warehouse.onrender.com/orders/${Id}`, {})
+      Axios.delete(`http://localhost:3001/orders/${Id}`, {})
         .then(() => {
           alert("Zamówienie " + Id + " zostało zrealizowane");
         })
