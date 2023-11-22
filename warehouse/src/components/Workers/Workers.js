@@ -20,7 +20,7 @@ const Workers = () => {
     getWorkers();
   }, []);
 
-  const worker = workers[index] || {}; // Use a default empty object if workers[index] is undefined
+  const worker = workers[index] || {};
   const { Name, Surname, PhoneNumber, Position } = worker;
   return (
     <>

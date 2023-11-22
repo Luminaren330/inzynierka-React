@@ -169,3 +169,19 @@ select {
  
 }
 
+@media screen and (max-width: 700px)  {
+ .head {
+  font-size: 10px;
+ }
+
+ .cartAdd, .orderEnd {
+  width: 60px;
+  font-size: 10px;
+ }
+
+ .tdList, .tdListwork, .orderpro, .orderp{
+    font-size: 10px;
+  }
+    
+}
+
