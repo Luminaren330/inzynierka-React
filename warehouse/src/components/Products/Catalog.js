@@ -4,11 +4,12 @@ import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/context";
 
-const Catalog = ({ filteredProductList }) => {
+const Catalog = ({ filteredProductList, setProductPressed }) => {
   const navigate = useNavigate();
   const { isLogedIn, isAdmin } = useGlobalContext();
 
   const addToCart = (Id, amount) => {
+    setProductPressed(false);
     if (!isNaN(amount)) {
       Axios.post("https://mysql-warehouse.onrender.com/products/cartadd", {
         ObjectSID: Id,
@@ -16,6 +17,7 @@ const Catalog = ({ filteredProductList }) => {
       })
         .then(() => {
           alert("Dodano produkt do koszyka");
+          setProductPressed(true);
         })
         .catch(() => navigate("/error"));
     } else {
@@ -24,6 +26,7 @@ const Catalog = ({ filteredProductList }) => {
   };
 
   const addProduct = (Id, amount) => {
+    setProductPressed(false);
     if (!isNaN(amount)) {
       Axios.put("https://mysql-warehouse.onrender.com/products/addproduct", {
         ObjectSID: Id,
@@ -31,6 +34,7 @@ const Catalog = ({ filteredProductList }) => {
       })
         .then(() => {
           alert("Dodano ilość produktów");
+          setProductPressed(true);
         })
         .catch(() => navigate("/error"));
     } else {

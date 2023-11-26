@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    getOrders();
-  });
+  const [isPressed, setIsPressed] = useState(false);
+  
 
   const getOrders = useCallback(() => {
     Axios.get("https://mysql-warehouse.onrender.com/orders")
@@ -19,11 +18,17 @@ const Orders = () => {
       .catch(() => navigate("/error"));
   }, [navigate]);
 
+  useEffect(() => {
+    getOrders();
+  }, [isPressed, getOrders]);
+
   const orderEnded = useCallback(
     (Id) => {
+      setIsPressed(false);
       Axios.delete(`https://mysql-warehouse.onrender.com/orders/${Id}`, {})
         .then(() => {
           alert("Zamówienie " + Id + " zostało zrealizowane");
+          setIsPressed(true);
         })
         .catch(() => navigate("/error"));
     },

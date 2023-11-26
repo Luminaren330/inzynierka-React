@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import Axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback} from "react";
 import styles from "./Products.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import Filter from "./Filter";
@@ -14,6 +14,8 @@ const Products = () => {
   const [filterCategory, setFilterCategory] = useState("");
   const [categoryList, setCategoryList] = useState([]);
   const [cart, setCart] = useState([]);
+  const [cartPressed, setCartPressed] = useState(false);
+  const [productPressed, setProductPressed] = useState(false);
   const navigate = useNavigate();
   const { isLogedIn } = useGlobalContext();
 
@@ -38,14 +40,15 @@ const Products = () => {
   }, [navigate]);
 
   useEffect(() => {
-    //console.log("Product");
     getProducts();
     getCart();
-  }, [cart, getCart, getProducts, productList]);
+  }, [getCart, getProducts, cartPressed, productPressed]);
 
   const filteredProductList = productList.filter((product) => {
     return filterCategory === "" || product.Category === filterCategory;
   });
+
+
 
   return (
     <>
@@ -58,12 +61,14 @@ const Products = () => {
           setFilterCategory={setFilterCategory}
         />
         <div className={styles.center}>
-          <Catalog filteredProductList={filteredProductList} />
+          <Catalog filteredProductList={filteredProductList}
+          setProductPressed = {setProductPressed} />
         </div>
         {!isLogedIn && (
           <>
             <h2 className={styles.header}>Twój koszyk</h2>
-            <Cart cart={cart} />
+            <Cart cart={cart} 
+            setCartPressed = {setCartPressed}/>
             {cart.length > 0 && (
               <Link to="/makeorder" className={styles.makeOrder}>
                 Złóż zamówienie
