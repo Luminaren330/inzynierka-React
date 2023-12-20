@@ -4,21 +4,20 @@ import Axios from "axios";
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, setCartPressed }) => {
   const navigate = useNavigate();
 
   const deleteCart = useCallback(
     (id) => {
-      Axios.delete(
-        `https://mysql-warehouse.onrender.com/products/deletecart/${id}`,
-        {}
-      )
+      setCartPressed(false);
+      Axios.delete(`https://mysql-warehouse.onrender.com/products/deletecart/${id}`, {})
         .then(() => {
           alert("Usunięto z koszyka");
+          setCartPressed(true);
         })
         .catch(() => navigate("/error"));
     },
-    [navigate]
+    [navigate, setCartPressed]
   );
 
   return (
