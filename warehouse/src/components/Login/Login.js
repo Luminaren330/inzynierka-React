@@ -59,7 +59,7 @@ const Login = () => {
           <label htmlFor="password">Hasło: </label>
           <input
             id="password"
-            type="text"
+            type="password"
             className={styles.input}
             onChange={(event) => setPassword(event.target.value)}
           ></input>
